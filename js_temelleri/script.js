@@ -25,4 +25,13 @@ for(let i of dizi){
     console.log(i)
 }
 
-// deneme
+function topla(){
+    let toplam = 0;
+    for(let arg in arguments){
+        toplam += arguments[arg];
+    }
+    return toplam;
+}
+
+console.log(topla(1,2,3))
+console.log(topla(1,))
