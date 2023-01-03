@@ -24,3 +24,5 @@ for(let i in dizi){
 for(let i of dizi){
     console.log(i)
 }
+
+// deneme
