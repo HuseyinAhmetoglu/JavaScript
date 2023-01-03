@@ -13,5 +13,14 @@ console.log(sayi1.toString()+sayi2.toString());
 
 console.log( typeof sayi1)
 
-let dizi = [1,2,3,4]
+let dizi = ["a",4,"x",1]
 console.log(dizi)
+
+
+for(let i in dizi){
+    console.log(dizi[i])
+}
+
+for(let i of dizi){
+    console.log(i)
+}
