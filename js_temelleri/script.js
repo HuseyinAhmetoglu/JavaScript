@@ -12,3 +12,6 @@ let sayi4 = 20;
 console.log(sayi1.toString()+sayi2.toString());
 
 console.log( typeof sayi1)
+
+let dizi = [1,2,3,4]
+console.log(dizi)
