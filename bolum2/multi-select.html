@@ -11,10 +11,15 @@
 
         <h3 id="title" class=" card-title h3">başlık 3 </h3>
 
-        <ul>
-            <li>liste</li>
-            <li>liste2</li>
-            <li>liste3</li>
+        <ul id="task-list">
+            <li class="task">liste1</li>
+            <li class="task">liste2</li>
+            <li class="task">liste3</li>
+        </ul>
+        <ul id="task-list2">
+            <li class="task">liste1</li>
+            <li class="task">liste2</li>
+            <li class="task">liste3</li>
         </ul>
     </div>
 
@@ -22,27 +27,17 @@
 
     let sonuc;
 
-    sonuc = document.getElementById("title").id;
-    sonuc = document.getElementById("title").className;
-    sonuc = document.getElementById("title").classList[1];
+    // tasks = document.getElementById("task-list");
+    // taskList = tasks.getElementsByClassName("task");
 
-    document.getElementById("title").style.fontSize = "30px";
-    document.getElementById("title").style.color = "gray";
+    taskList = document.querySelectorAll("#task-list2 .task");
 
-    document.getElementById("title").innerText = "Başlığım";
-    document.getElementById("title").innerHTML = "<i>Başlığım</i>";
+    for (let index = 0; index < taskList.length; index++) {
+        taskList[index].style.color = "Red";
+        taskList[index].style.fontSize = "30px";
+        
+    }
 
-    sonuc = document.querySelector("div");
-    sonuc = document.querySelector("#title");
-    sonuc = document.querySelector(".card-header");
-
-    sonuc = document.querySelector("li");
-    sonuc = document.querySelector("li:first-child");
-    sonuc = document.querySelector("li:last-child");
-    sonuc = document.querySelector("li:nth-child(2)");
-
-
-    console.log(sonuc);
 
     </script>
 </body>
