@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card-header">
+
+        <h3 id="title" class=" card-title h3">başlık 3 </h3>
+
+        <ul>
+            <li>liste</li>
+            <li>liste2</li>
+            <li>liste3</li>
+        </ul>
+    </div>
+
+    <script>    
+
+    let sonuc;
+
+    sonuc = document.getElementById("title").id;
+    sonuc = document.getElementById("title").className;
+    sonuc = document.getElementById("title").classList[1];
+
+    document.getElementById("title").style.fontSize = "30px";
+    document.getElementById("title").style.color = "gray";
+
+    document.getElementById("title").innerText = "Başlığım";
+    document.getElementById("title").innerHTML = "<i>Başlığım</i>";
+
+    sonuc = document.querySelector("div");
+    sonuc = document.querySelector("#title");
+    sonuc = document.querySelector(".card-header");
+
+    sonuc = document.querySelector("li");
+    sonuc = document.querySelector("li:first-child");
+    sonuc = document.querySelector("li:last-child");
+    sonuc = document.querySelector("li:nth-child(2)");
+
+
+    console.log(sonuc);
+
+    </script>
+</body>
+</html>
