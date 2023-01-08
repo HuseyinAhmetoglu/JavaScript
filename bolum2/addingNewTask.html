@@ -69,6 +69,10 @@
         { id: 2, gorevAdi: "Görev 2" },
         { id: 3, gorevAdi: "Görev 3" },
       ];
+
+      let txtTask = document.querySelector("#txtTaskName");
+      let editId;
+      let isEditTask = false;
       displayText();
 
       function displayText() {
@@ -91,7 +95,7 @@
                               </button>
                               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a onclick="deleteTask(${gorev.id})" class="dropdown-item" href="#"><i class="fa-solid fa-trash"></i> Sil</a></li>
-                                <li><a onclick="deleteTask(${gorev.id})" class="dropdown-item" href="#"><i class="fa-solid fa-pen"></i> Düzenle</a></li>
+                                <li><a onclick="updateTask(${gorev.id}, '${gorev.gorevAdi}')" class="dropdown-item" href="#"><i class="fa-solid fa-pen"></i> Düzenle</a></li>
                               </ul>
                             </div>
                     </li> 
@@ -114,15 +118,27 @@
       //   .addEventListener("click", gorevTemizle);
 
       function gorevEkle(event) {
-        let txtTask = document.querySelector("#txtTaskName");
 
         if (txtTask.value == "") {
           alert("Bir değer girmelisiniz.");
         } else {
-          gorevListesi.push({
+
+          if (!isEditTask) {
+            //Ekleme
+            gorevListesi.push({
             id: gorevListesi.length + 1,
             gorevAdi: txtTask.value,
           });
+          } else {
+            //Güncelleme
+            for(let gorev of gorevListesi){
+              if (gorev.id == editId) {
+                gorev.gorevAdi = txtTask.value;
+              }
+              isEditTask = false;
+            }
+          }
+          
           txtTask.value = "";
           displayText();
         }
@@ -146,6 +162,14 @@
 
         gorevListesi.splice(deletedId, 1);
         displayText();
+      }
+
+      function updateTask(id, ad){
+          editId = id;
+          isEditTask = true;
+          txtTask.value = ad;
+          txtTask.focus();
+          txtTask.classList.add("active");
       }
     </script>
   </body>
