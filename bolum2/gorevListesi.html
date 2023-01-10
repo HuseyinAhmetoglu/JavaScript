@@ -23,8 +23,25 @@
         justify-content: space-between;
       }
 
-      .task label.checked{
+      .task label.checked {
         text-decoration: line-through;
+      }
+
+      .controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .filters span.active {
+        color: cornflowerblue;
+      }
+
+      .filters span {
+        margin-right: 5px;
+        font-size: 15px;
+        column-rule-color: gray;
+        cursor: pointer;
       }
     </style>
     <title>Document</title>
@@ -52,7 +69,12 @@
             </div>
           </div>
           <div class="card mt-3">
-            <div class="card-header">
+            <div class="card-header controls">
+              <div class="filters">
+                <span class="active" id="all">Hepsi</span>
+                <span id="pending">Yapılacaklar</span>
+                <span id="completed">Tamamlananlar</span>
+              </div>
               <button class="btn btn-danger btn-sm float-end" id="btnClear">
                 Sil
               </button>
@@ -66,22 +88,24 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+      
       let gorevListesi = [
         { id: 1, gorevAdi: "Görev 1", durum: "completed" },
         { id: 2, gorevAdi: "Görev 2", durum: "pending" },
         { id: 3, gorevAdi: "Görev 3", durum: "completed" },
-        { id: 4, gorevAdi: "Görev 4", durum: "pending" }
+        { id: 4, gorevAdi: "Görev 4", durum: "pending" },
       ];
 
       const txtTask = document.querySelector("#txtTaskName");
       const btnClear = document.querySelector("#btnClear");
+      const filters = document.querySelectorAll(".filters span");
 
       let editId;
       let isEditTask = false;
 
-      displayText();
+      displayText("all");
 
-      function displayText() {
+      function displayText(filter) {
         let ul = document.getElementById("task-list");
         ul.innerHTML = "";
 
@@ -89,12 +113,10 @@
           ul.innerHTML = "<p class='p-3 m-0'>Görev Listesi Boş!</p>";
         } else {
           for (const gorev of gorevListesi) {
-
             let completed = gorev.durum == "completed" ? "checked" : "";
 
-
-
-            let li = ` <li class="task list-group-item">
+            if (filter == gorev.durum || filter == "all") {
+              let li = ` <li class="task list-group-item">
                             <div class="form-check">
                                 <input type="checkbox"  onclick = "updateStatus(this)" id="${gorev.id}" class="form-check-input" ${completed}>
                                 <label for="${gorev.id}" class="form-chech-label ${completed}">
@@ -111,11 +133,9 @@
                                 <li><a onclick="updateTask(${gorev.id}, '${gorev.gorevAdi}')" class="dropdown-item" href="#"><i class="fa-solid fa-pen"></i> Düzenle</a></li>
                               </ul>
                             </div>
-                    </li> 
-
-                    `;
-
-            ul.insertAdjacentHTML("beforeend", li);
+                          </li> `;
+              ul.insertAdjacentHTML("beforeend", li);
+            }
           }
         }
       }
@@ -130,6 +150,14 @@
       // document
       //   .querySelector("#btnClear")
       //   .addEventListener("click", gorevTemizle);
+
+      for (let span of filters) {
+        span.addEventListener("click", function () {
+          document.querySelector("span.active").classList.remove("active");
+          span.classList.add("active");
+          displayText(span.id);
+        });
+      }
 
       function gorevEkle(event) {
         if (txtTask.value == "") {
@@ -152,7 +180,7 @@
           }
 
           txtTask.value = "";
-          displayText();
+          displayText(document.querySelector("span.avtive").id);
         }
 
         event.preventDefault();
@@ -172,7 +200,7 @@
         deletedId = gorevListesi.findIndex((gorev) => gorev.id == id);
 
         gorevListesi.splice(deletedId, 1);
-        displayText();
+        displayText(document.querySelector("span.avtive").id);
       }
 
       function updateTask(id, ad) {
@@ -185,30 +213,27 @@
 
       btnClear.addEventListener("click", function () {
         gorevListesi.splice(0, gorevListesi.length);
-        displayText();
+        displayText(document.querySelector("span.avtive").id);
       });
 
-      function updateStatus(selectedTask){
-          //console.log(selectedTask.nextElementSibling);
+      function updateStatus(selectedTask) {
+        //console.log(selectedTask.nextElementSibling);
 
-          let label = selectedTask.nextElementSibling;
-          let durum;
-          if(selectedTask.checked){
-            label.classList.add("checked");
-            durum = "completed";
-          }else{
-            label.classList.remove("checked");
-            durum = "pending";
+        let label = selectedTask.nextElementSibling;
+        let durum;
+        if (selectedTask.checked) {
+          label.classList.add("checked");
+          durum = "completed";
+        } else {
+          label.classList.remove("checked");
+          durum = "pending";
+        }
+
+        for (let gorev of gorevListesi) {
+          if (gorev.id == selectedTask.id) {
+            gorev.durum = durum;
           }
-
-          for(let gorev of gorevListesi){
-            if(gorev.id == selectedTask.id){
-              gorev.durum = durum;
-            }
-          }
-
-          //görev listesi
-          console.log(gorevListesi);
+        }
       }
     </script>
   </body>
