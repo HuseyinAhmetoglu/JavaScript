@@ -86,9 +86,9 @@
         </div>
       </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      
       let gorevListesi = [
         { id: 1, gorevAdi: "Görev 1", durum: "completed" },
         { id: 2, gorevAdi: "Görev 2", durum: "pending" },
@@ -104,6 +104,25 @@
       let isEditTask = false;
 
       displayText("all");
+
+      document
+        .querySelector("#btnAddNewTask")
+        .addEventListener("click", gorevEkle);
+      // document
+      //   .querySelector("#btnAddNewTask")
+      //   .addEventListener("keypress", gorevEkle);
+
+      // document
+      //   .querySelector("#btnClear")
+      //   .addEventListener("click", gorevTemizle);
+
+      for (let span of filters) {
+        span.addEventListener("click", function () {
+          document.querySelector("span.active").classList.remove("active");
+          span.classList.add("active");
+          displayText(span.id);
+        });
+      }
 
       function displayText(filter) {
         let ul = document.getElementById("task-list");
@@ -140,25 +159,6 @@
         }
       }
 
-      document
-        .querySelector("#btnAddNewTask")
-        .addEventListener("click", gorevEkle);
-      // document
-      //   .querySelector("#btnAddNewTask")
-      //   .addEventListener("keypress", gorevEkle);
-
-      // document
-      //   .querySelector("#btnClear")
-      //   .addEventListener("click", gorevTemizle);
-
-      for (let span of filters) {
-        span.addEventListener("click", function () {
-          document.querySelector("span.active").classList.remove("active");
-          span.classList.add("active");
-          displayText(span.id);
-        });
-      }
-
       function gorevEkle(event) {
         if (txtTask.value == "") {
           alert("Bir değer girmelisiniz.");
@@ -168,6 +168,7 @@
             gorevListesi.push({
               id: gorevListesi.length + 1,
               gorevAdi: txtTask.value,
+              durum : "pending"
             });
           } else {
             //Güncelleme
@@ -180,7 +181,7 @@
           }
 
           txtTask.value = "";
-          displayText(document.querySelector("span.avtive").id);
+          displayText(document.querySelector("span.active").id);
         }
 
         event.preventDefault();
@@ -200,7 +201,7 @@
         deletedId = gorevListesi.findIndex((gorev) => gorev.id == id);
 
         gorevListesi.splice(deletedId, 1);
-        displayText(document.querySelector("span.avtive").id);
+        displayText(document.querySelector("span.active").id);
       }
 
       function updateTask(id, ad) {
@@ -213,7 +214,7 @@
 
       btnClear.addEventListener("click", function () {
         gorevListesi.splice(0, gorevListesi.length);
-        displayText(document.querySelector("span.avtive").id);
+        displayText(document.querySelector("span.active").id);
       });
 
       function updateStatus(selectedTask) {
