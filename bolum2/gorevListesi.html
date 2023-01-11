@@ -89,12 +89,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      let gorevListesi = [
-        { id: 1, gorevAdi: "Görev 1", durum: "completed" },
-        { id: 2, gorevAdi: "Görev 2", durum: "pending" },
-        { id: 3, gorevAdi: "Görev 3", durum: "completed" },
-        { id: 4, gorevAdi: "Görev 4", durum: "pending" },
-      ];
+      let gorevListesi = [];
+
+      if(localStorage.getItem("gorevListesi") !== null){
+        gorevListesi = JSON.parse(localStorage.getItem("gorevListesi"));
+      }
 
       const txtTask = document.querySelector("#txtTaskName");
       const btnClear = document.querySelector("#btnClear");
@@ -182,6 +181,7 @@
 
           txtTask.value = "";
           displayText(document.querySelector("span.active").id);
+          localStorage.setItem("gorevListesi", JSON.stringify(gorevListesi));
         }
 
         event.preventDefault();
@@ -202,6 +202,8 @@
 
         gorevListesi.splice(deletedId, 1);
         displayText(document.querySelector("span.active").id);
+        localStorage.setItem("gorevListesi", JSON.stringify(gorevListesi));
+
       }
 
       function updateTask(id, ad) {
@@ -214,7 +216,8 @@
 
       btnClear.addEventListener("click", function () {
         gorevListesi.splice(0, gorevListesi.length);
-        displayText(document.querySelector("span.active").id);
+        localStorage.setItem("gorevListesi", JSON.stringify(gorevListesi));
+        displayText();
       });
 
       function updateStatus(selectedTask) {
@@ -235,6 +238,7 @@
             gorev.durum = durum;
           }
         }
+        localStorage.setItem("gorevListesi", JSON.stringify(gorevListesi));
       }
     </script>
   </body>
