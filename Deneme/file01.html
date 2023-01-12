@@ -17,10 +17,20 @@
         ]
 
         // let sonuc = urunler.filter((urun)=> urun.fiyat > 20000).map(urun => urun.urunAdi);
-        let sonuc = urunler.filter(urun=> urun.fiyat);
+        //let sonuc = urunler.find(urun => urun.fiyat > 20000);
+        let sonuc = urunler.findIndex(urun => urun.fiyat > 20000);
 
 
-        console.log(sonuc);
+        // console.log(sonuc);
+
+        // console.log(...urunler)
+
+        let sayilar1 = [1,2,3];
+        let sayilar2  = sayilar1 // referans copy
+
+        sayilar3 = [...sayilar1]; // valur copy
+
+        console.log(sayilar3)
     </script>
 </body>
 </html>
