@@ -4,22 +4,60 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
     <title>Document</title>
 </head>
 <body>
-    
+    <div class="container my-3">
+        <div class="row">
+
+        </div>
+    </div>
+
+
     <script>
-        const req = new XMLHttpRequest();
 
-        req.open('GET', 'https://restcountries.com/v3.1/name/turkey');
-        req.send();
+        function displayCountry(country){
+            
+            const req = new XMLHttpRequest();
 
-        // async
+            req.open('GET', 'https://restcountries.com/v3.1/name/' + country);
+            req.send();
 
-        req.addEventListener('load', function(){
-            const data = this.responseText;
-            console.log(typeof data);
-        });
+            // async
+
+            req.addEventListener('load', function(){
+                const data = JSON.parse(this.responseText);
+                // console.log(typeof data);
+                // console.log(data)
+                setCountry(data[0])
+
+            });
+        }
+
+
+        function setCountry(data){
+            const html = `
+            <div class="card" style="width: 18rem;">
+                <img src="${data.flags.png}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${data.name.common}</h5>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">Population: ${data.population}</li>
+                    <li class="list-group-item">Capital: ${data.capital}</li>
+                    <li class="list-group-item">Languages: ${Object.values(data.languages)}</li>
+                </ul>
+            </div>
+            `;
+
+            document.querySelector(".container .row").insertAdjacentHTML("beforeend", html);
+        };
+
+        displayCountry("turkey");
+        displayCountry("france");
+
 
 
     </script>
